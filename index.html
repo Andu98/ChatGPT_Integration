@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="author" content="colorlib.com">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up Form</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="css/style.css">
+        <script>
+      function generateResponse() {
+        const loader_wheel = document.getElementById("loader_wheel");
+        loader_wheel.style.display = "block";
+        const prompt = document.getElementById("prompt").value;
+        const apiKey = "insert API here";
+        const request = new XMLHttpRequest();
+        request.open("POST", "https://api.openai.com/v1/completions", true);
+        request.setRequestHeader("Content-Type", "application/json");
+        request.setRequestHeader("Authorization", `Bearer ${apiKey}`);
+        request.onreadystatechange = function() {
+          if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            const response = JSON.parse(this.responseText);
+            document.getElementById("response").innerHTML = response.choices[0].text;
+            loader_wheel.style.display = "none";
+          }
+        };
+        request.send(JSON.stringify({
+	    model: "text-davinci-003",
+          prompt: prompt,
+          max_tokens: 500,
+          temperature: 0.5,
+        }));
+      }
+    </script>
+</head>
+
+<body>
+
+    <div class="main">
+
+        <div class="container">
+            <div class="signup-content">
+                <div class="signup-desc">
+                    <div class="signup-desc-content">
+                        <img src="./images/Identitate-Connections-PNG2.png" alt="Connections Consult" width="273" height="100">
+
+                        <h2> &ChatGPT</h2>
+                        <p class="title">Sign up now and unlock the best AI engine 30 days for free</p>
+                        <p class="desc">
+                            Developed by Tudor Alexandru
+                        </p>
+                        <img src="images/signup-img.jpg" alt="" class="signup-img">
+                    </div>
+                </div>
+                <div class="signup-form-conent">
+                    <div method="POST" id="signup-form" class="signup-form" enctype="multipart/form-data">
+                        <h3></h3>
+                        <fieldset>
+                           
+                            <div class="form-group">
+                             
+                                <label style="font-size:large" for="prompt">Cu ce va pot ajuta?</label>
+                             <input type="text" style="font-size: large;" id="prompt" value="">
+                            </div>
+                        </fieldset>
+                        <fieldset style="margin-top:20px;">
+                           
+                            <div style="display:flex">
+                            <div class="form-group">
+                                <button style= "  background-color: #15131c; /* Green */
+                                border: none;
+                                color: white;
+                                padding: 15px 32px;
+                                text-align: center;
+                                text-decoration: none;
+                                display: inline-block;
+                                font-size: 16px;
+                                cursor: pointer;" onclick="generateResponse()">Genereaza Raspuns</button>
+                            </div>
+                            <div style="display:none" id="loader_wheel" class="loader"></div>
+                        </div>
+                        </fieldset>
+
+                        <fieldset style="margin-top:50px;">
+                           
+                            <div class="form-group">
+                              
+                                <label id="response" style="font-size:large;font-family:Calibri, sans-serif" ></label>
+                            </div>
+                        </fieldset>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JS -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="vendor/jquery-validation/dist/additional-methods.min.js"></script>
+    <script src="vendor/jquery-steps/jquery.steps.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
